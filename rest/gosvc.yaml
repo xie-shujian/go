@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: gosvc
+spec:
+  ports:
+  - port: 10000
+  selector:
+    app: gosvc
+ 
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gosvc
+spec:
+  selector:
+    matchLabels:
+      app: gosvc
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: gosvc
+    spec:
+      containers:
+      - image: gosvc
+        name: gosvc
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 10000
+          name: gosvc
+
+
+
+
+          
